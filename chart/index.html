@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript">
+			google.charts.load('current');   // Don't need to specify chart libraries!
+			google.charts.setOnLoadCallback(drawVisualization);
+
+			var data = [['Country', 'Sales'],
+				['Germany', 700],
+				['USA', 300],
+				['Brazil', 400],
+				['Canada', 500],
+				['France', 600],
+				['RU', 800]
+			];
+			data = [['Country', 'Sales',"Value"],
+				['Germany', 700,300],
+				['USA', 300,540],
+				['Brazil', 400,562],
+				['Canada', 500,652],
+				['France', 600,425],
+				['RU', 800,523]
+			];
+			var cdata = [['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
+				[700, 300, 400, 500, 600, 800],
+				[500, 600, 800, 700, 300, 400]];
+
+			var wrapper;
+			var wrapper1;
+			function drawVisualization() {
+				wrapper = new google.visualization.ChartWrapper({
+					chartType: 'ColumnChart',
+					dataTable: data,
+					options: {'title': 'Countries'},
+					containerId: 'column_chart'
+				});
+				wrapper.draw();
+				
+				wrapper1 = new google.visualization.ChartWrapper({
+					chartType: 'PieChart',
+					dataTable: data,
+					options: {'title': 'Countries'},
+					containerId: 'pie_chart'
+				});
+				wrapper1.draw();
+			}
+			
+			
+			//var $ = jQuery;
+			$(document).ready(function(){
+				$( "#info_button" ).click(function() {
+					var output = "";
+					
+					output += "<br> wrapper.getChartType() = " + wrapper.getChartType();
+					output += "<br> wrapper.getChartName() = " + wrapper.getChartName();
+					output += "<br> wrapper.getContainerId() = " + wrapper.getContainerId();
+					output += "<br> wrapper.getQuery() = " + wrapper.getQuery();
+					output += "<br> wrapper.getRefreshInterval() = " + wrapper.getRefreshInterval();
+					output += "<br> wrapper.getOptions() = " + wrapper.getOptions();
+					output += "<br> wrapper.getOption('title') = " + wrapper.getOptions('title');
+					
+					output += "<br> wrapper.getView() = " + wrapper.getView();
+					
+					$( "#info" ).html(output);
+				});
+				
+				$( "#chart_type" ).change(function() {
+					var chart_type = $( this ).val();
+					
+					var output = "";
+					output += chart_type;
+					output += wrapper.getChartType();
+					
+					$( "#info" ).html(output);
+					
+					wrapper.setChartType(chart_type);
+					wrapper.draw();
+					
+				});
+			});
+		</script>
+	</head>
+	<body style="font-family: Arial;border: 0 none;">
+		<input id="info_button" type="button" value="Get Chart Info" />
+		
+		<div id="filters">
+			<select id="chart_type">
+				<option value="">Select Chart Type</option>
+				<option value="ColumnChart">Column Chart</option>
+				<option value="BarChart">Bar Chart</option>
+				<option value="AreaChart">Area Chart</option>
+				<option value="PieChart">Pie Chart</option>
+			</select>
+			<select id="chart_type">
+				<option value="">Select Chart Type</option>
+				<option value="ColumnChart">Column Chart</option>
+				<option value="BarChart">Bar Chart</option>
+				<option value="AreaChart">Area Chart</option>
+				<option value="PieChart">Pie Chart</option>
+			</select>
+		</div>
+		<div id="info">
+
+		</div>
+		<div id="column_chart" style="width: 600px; height: 400px;"></div>
+		<div id="pie_chart" style="width: 600px; height: 400px;"></div>
+	</body>
+</html>
